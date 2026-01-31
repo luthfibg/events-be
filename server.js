@@ -16,8 +16,12 @@ app.use(cors({
 // Parse JSON bodies
 app.use(express.json());
 
-// Serve static files from 'public' folder
+// Serve static files from 'public' folder and subfolders
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use('/customers', express.static(path.join(__dirname, 'public/customers')));
+app.use('/gallery', express.static(path.join(__dirname, 'public/gallery')));
+app.use('/products', express.static(path.join(__dirname, 'public/products')));
 
 // Load database
 let db = { products: [], orders: [] };
@@ -189,7 +193,7 @@ app.post('/api/orders', async (req, res) => {
 });
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use((req, res) => {
   res.status(404).json({
     error: 'Endpoint not found',
     requested: req.originalUrl,

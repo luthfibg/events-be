@@ -12,16 +12,14 @@
   "keywords": [
     "api",
     "backend",
-    "json-server"
+    "express",
+    "vercel"
   ],
   "author": "Muhamad Luthfi",
   "license": "ISC",
-  "description": "Backend API for Gandrung Events using JSON server",
+  "description": "Backend API for Gandrung Events using Express.js",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "fs": "^0.0.1-security",
-    "json-server": "^1.0.0-beta.5",
-    "path": "^0.12.7"
+    "express": "^5.2.1"
   }
 }
