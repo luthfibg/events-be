@@ -1,10 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs').promises;
-const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // Enable CORS for all routes
 app.use(cors({
@@ -16,41 +13,36 @@ app.use(cors({
 // Parse JSON bodies
 app.use(express.json());
 
-// Serve static files from 'public' folder and subfolders
-app.use(express.static(path.join(__dirname, '../public')));
-app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
-app.use('/customers', express.static(path.join(__dirname, '../public/customers')));
-app.use('/gallery', express.static(path.join(__dirname, '../public/gallery')));
-app.use('/products', express.static(path.join(__dirname, '../public/products')));
-
-// Load database
-let db = { products: [], orders: [] };
-
-// Load data from db.json
-async function loadData() {
-  try {
-    const data = await fs.readFile(path.join(__dirname, '../db.json'), 'utf8');
-    db = JSON.parse(data);
-    console.log('Database loaded successfully');
-  } catch (error) {
-    console.log('Could not load db.json, using empty database');
-  }
-}
-
-// Save data to db.json
-async function saveData() {
-  try {
-    await fs.writeFile(
-      path.join(__dirname, '../db.json'),
-      JSON.stringify(db, null, 2)
-    );
-  } catch (error) {
-    console.error('Error saving data:', error);
-  }
-}
-
-// Initialize data
-loadData();
+// In-memory database for Vercel serverless environment
+let db = {
+  products: [
+    {
+      id: 1,
+      title: "Upad IV Unilumin",
+      type: "led display",
+      specifications: "P3.9, 500x500mm, 1920Hz, 5500nits, 3840Hz",
+      rent: 100000,
+      image: "https://events-be-indol.vercel.app/uploads/upadIV.webp"
+    },
+    {
+      id: 2,
+      title: "Uslim III Unilumin",
+      type: "led display",
+      specifications: "P2.5, 500x1000mm, 1920Hz, 7500nits, 3840Hz",
+      rent: 150000,
+      image: "https://events-be-indol.vercel.app/uploads/uslimIII.webp"
+    },
+    {
+      id: "3",
+      title: "Samsung 60inch TV",
+      type: "tv",
+      specifications: "60inch, 4K UHD, Smart TV",
+      rent: 50000,
+      image: "https://events-be-indol.vercel.app/uploads/tv60.jpg"
+    }
+  ],
+  orders: []
+};
 
 // ========== API ROUTES ==========
 
@@ -114,7 +106,6 @@ app.post('/products', async (req, res) => {
     };
 
     db.products.push(newProduct);
-    await saveData();
 
     res.status(201).json(newProduct);
   } catch (error) {
@@ -131,7 +122,6 @@ app.put('/products/:id', async (req, res) => {
 
   if (index !== -1) {
     db.products[index] = { ...db.products[index], ...req.body };
-    await saveData();
     res.json(db.products[index]);
   } else {
     res.status(404).json({ error: 'Product not found' });
@@ -147,7 +137,6 @@ app.delete('/products/:id', async (req, res) => {
 
   if (index !== -1) {
     db.products.splice(index, 1);
-    await saveData();
     res.json({ success: true, message: 'Product deleted' });
   } else {
     res.status(404).json({ error: 'Product not found' });
@@ -208,4 +197,4 @@ app.use((err, req, res, next) => {
 });
 
 // Export for Vercel
-module.exports = serverless(app);
+module.exports = app;
