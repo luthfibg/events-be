@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: '*', // Allow all origins, or specify: ['https://gandrung-events.vercel.app']
+  origin: 'https://gandrung-events.vercel.app', // Allow specific origin for Vercel frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
