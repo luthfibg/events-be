@@ -9,12 +9,19 @@
     "build": "echo 'Building...'",
     "vercel-build": "npm install && echo 'Build complete'"
   },
-  "keywords": ["api", "backend", "json-server"],
+  "keywords": [
+    "api",
+    "backend",
+    "json-server"
+  ],
   "author": "Muhamad Luthfi",
   "license": "ISC",
   "description": "Backend API for Gandrung Events using JSON server",
   "dependencies": {
     "cors": "^2.8.6",
-    "json-server": "^1.0.0-beta.5"
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "json-server": "^1.0.0-beta.5",
+    "path": "^0.12.7"
   }
 }
