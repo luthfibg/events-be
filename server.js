@@ -8,6 +8,7 @@ const middlewares = jsonServer.defaults({
 
 // Enable CORS
 server.use((req, res, next) => {
+  console.log(`Request: ${req.method} ${req.url}`); // Add logging
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -22,8 +23,8 @@ server.options('*', (req, res) => {
 // Use middlewares
 server.use(middlewares);
 
-// API routes
-server.use('/api', router);
+// API routes - REMOVE '/api' prefix
+server.use(router); // Changed from server.use('/api', router)
 
 // Health check endpoint
 server.get('/health', (req, res) => {
@@ -35,8 +36,8 @@ server.get('/', (req, res) => {
   res.json({
     message: 'Gandrung Events API',
     endpoints: {
-      products: '/api/products',
-      orders: '/api/orders',
+      products: '/products',  // Updated
+      orders: '/orders',      // Updated
       images: '/uploads/{filename}'
     }
   });
@@ -47,15 +48,6 @@ server.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
 });
-
-const PORT = process.env.PORT || 3001;
-
-// Only listen if not in Vercel (Vercel handles the server)
-if (process.env.VERCEL !== '1') {
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
 
 // Export for Vercel
 module.exports = server;
