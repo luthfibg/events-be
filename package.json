@@ -1,0 +1,19 @@
+{
+  "name": "gandrung-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "json-server --watch db.json --port 3001",
+    "vercel-build": "npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "json-server": "^1.0.0-beta.5"
+  }
+}

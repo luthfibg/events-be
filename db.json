@@ -1,0 +1,29 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Upad IV Unilumin",
+            "type": "led display",
+            "specifications": "P3.9, 500x500mm, 1920Hz, 5500nits, 3840Hz",
+            "rent": 100000,
+            "image": "/uploads/upadIV.webp"
+        },
+        {
+            "id": 2,
+            "title": "Uslim III Unilumin",
+            "type": "led display",
+            "specifications": "P2.5, 500x1000mm, 1920Hz, 7500nits, 3840Hz",
+            "rent": 150000,
+            "image": "/uploads/uslimIII.webp"
+        },
+        {
+            "id": "3",
+            "title": "Samsung 60inch TV",
+            "type": "tv",
+            "specifications": "60inch, 4K UHD, Smart TV",
+            "rent": 50000,
+            "image": "/uploads/tv60.jpg"
+        }
+    ], 
+    "order": []
+}
